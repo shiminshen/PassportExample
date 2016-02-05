@@ -8,7 +8,8 @@ import LoginComponent from './LoginComponent.js';
 class AppComponent extends React.Component {
   render() {
     return (
-      <div>
+      <div className='index'>
+        <h1>Passport Example</h1>
         <LoginComponent/>
       </div>
     );
