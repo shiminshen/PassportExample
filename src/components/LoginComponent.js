@@ -8,7 +8,8 @@ class LoginComponent extends React.Component {
   render() {
     return (
       <div className="login-component">
-        <a href='/Login' className='icon-button facebook'>f</a>
+        <a href='/login' className='icon-button facebook'>f</a>
+        <a href='/logout' className='icon-button facebook'>out</a>
       </div>
     );
   }
