@@ -71,9 +71,11 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.1",
     "core-js": "^2.0.0",
+    "exports-loader": "^0.6.2",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "font-awesome": "^4.5.0",
+    "imports-loader": "^0.6.5",
     "normalize.css": "^3.0.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0"
