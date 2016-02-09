@@ -19,6 +19,19 @@ function(accessToken, refreshToken, profile, cb) {
   return cb(null, profile);
 }));
 
+// set cors
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+});
+
 app.use(express.static('.'))
 .use(require('cookie-parser')())
 .use(require('body-parser').urlencoded({ extended: true  }))
@@ -38,16 +51,25 @@ passport.deserializeUser(function(obj, done) {
 });
 
 app.get('/showInfo', function(req, res) {
-  console.log(req.user);
   res.send(req.user);
+});
+
+app.get('/getUser', function(req, res) {
+  console.log(req.user);
+  if(req.user) {
+    res.json(req.user._json);
+  }
+  else
+    res.send('');
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
+// after authorization
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' })
   , function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/showInfo');
+    res.redirect('/');
   });
 
 app.get('/logout', function(req, res) {
