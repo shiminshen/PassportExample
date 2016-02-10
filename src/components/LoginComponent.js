@@ -11,7 +11,7 @@ class LoginComponent extends React.Component {
       name: ''
     };
   }
-  
+
   // check authorization before mount
   componentWillMount() {
     fetch('/getUser', {
@@ -19,17 +19,16 @@ class LoginComponent extends React.Component {
       // add for sending cookies
       credentials: 'same-origin'
     }).then((res) => {
-
-      res.json()
+      return res.json()
       .then((data) => {
 
-          let userName = data.first_name;
+        let userName = data.first_name;
 
-          // if user is authorized, update status
-          if(userName)
-            return this.setState({name: userName});
-          else return;
-        });
+        // if user is authorized, update status
+        if(userName)
+          return this.setState({name: userName});
+        else return;
+      });
     });
   }
 
@@ -45,7 +44,7 @@ class LoginComponent extends React.Component {
         )}
       </div>
     );
-}
+  }
 }
 
 LoginComponent.displayName = 'LoginComponent';
