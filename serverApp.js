@@ -1,11 +1,11 @@
-var express = require('express');
-var flash = require('connect-flash');
-var passport = require('passport');
+var express          = require('express');
+var flash            = require('connect-flash');
+var passport         = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var open = require('open');
+var GoogleStrategy   = require('passport-google-oauth20').Strategy;
+var open             = require('open');
 
 // required for binding webpack dev server
-// var proxy = require('express-http-proxy');
 var proxy = require('proxy-middleware');
 
 var url = require('url');
@@ -13,7 +13,7 @@ var url = require('url');
 var app = express();
 var port = 3000;
 
-// FacebookStrategt will execute after calling 'passport.authorization('facebook')'
+// FacebookStrategy will execute after calling 'passport.authorization('facebook')'
 passport.use(new FacebookStrategy({
   clientID: '1505414496431853',
   clientSecret: '10a20b4913227b7e958700673680695a',
@@ -22,7 +22,23 @@ passport.use(new FacebookStrategy({
 },
 function(accessToken, refreshToken, profile, cb) {
   // pass profile info to serialize user.
-  return cb(null, profile);
+  var user = {};
+
+  user.name = profile.name.familyName + profile.name.givenName
+  return cb(null, user);
+}));
+
+// GoogleStratety
+
+passport.use(new GoogleStrategy({
+  clientID: '233632838066-oouvqgoijgaau2ovr09rbt79v68qlqa8.apps.googleusercontent.com',
+  clientSecret: 'hKRt4539PraYNOe5tJkF0PLd',
+  callbackURL: "http://localhost:3000/auth/google/callback"
+
+},
+function(accessToken, refreshToken, profile, cb) {
+  var user = {name: profile.displayName};
+  return cb(null, user);
 }));
 
 // set cors
@@ -65,23 +81,29 @@ app.get('/showInfo', function(req, res) {
 app.get('/getUser', function(req, res) {
   // console.log(req.user);
   if(req.user) {
-    res.json(req.user._json);
+    // res.json(req.user._json);
+    res.json(req.user);
   }
   else
     res.send('');
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
 // after authorization
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' })
-  , function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/');
+});
+
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/'  }), function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/');
+  //       
+});
 
 app.get('/logout', function(req, res) {
-  console.log(req.isAuthenticated());
   req.logout();
   res.clearCookie('connect.sid', { path: '/' });
   req.session.destroy((err) => {

@@ -22,7 +22,9 @@ class LoginComponent extends React.Component {
       return res.json()
       .then((data) => {
 
-        let userName = data.first_name;
+        
+        console.log(data);
+        let userName = data.name;
 
         // if user is authorized, update status
         if(userName)
@@ -36,14 +38,14 @@ class LoginComponent extends React.Component {
     return (
       <div className="login-component">
         {this.state.name ?
-        (<div>
+        (<div className='userInfo'>
           <p>Hi {this.state.name}</p>
           <a href='/logout' className='icon-button facebook'>out</a>
         </div>) : (
         <div className='button-group'>
           <a href='/auth/facebook' className='icon-button facebook'><i className="fa fa-facebook"></i></a>
           <a href='/auth/google' className='icon-button google'><i className="fa fa-google-plus"></i></a>
-          <a href='/auth/google' className='icon-button github'><i className="fa fa-github"></i></a>
+          <a href='/auth/github' className='icon-button github'><i className="fa fa-github"></i></a>
         </div>
         )}
       </div>

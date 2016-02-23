@@ -10,7 +10,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className='index'>
-        <h1>Authorization Example</h1>
+        <h1>Passport Example</h1>
         <LoginComponent/>
       </div>
     );
