@@ -11,7 +11,10 @@ class AppComponent extends React.Component {
     return (
       <div className='index'>
         <h1>Passport Example</h1>
-        <LoginComponent/>
+        <h4>
+          Use Passport for authentication with Node.
+        </h4>
+        <LoginComponent />
       </div>
     );
   }
