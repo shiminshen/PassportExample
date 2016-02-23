@@ -4,6 +4,12 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var open = require('open');
 
+// required for binding webpack dev server
+// var proxy = require('express-http-proxy');
+var proxy = require('proxy-middleware');
+
+var url = require('url');
+
 var app = express();
 var port = 3000;
 
@@ -32,7 +38,9 @@ app.use(function(req, res, next) {
   }
 });
 
-app.use(express.static('.'))
+app.use('/assets', proxy(url.parse('http://localhost:8000/assets')));
+
+app.use(express.static(__dirname + '/src/'))
 .use(require('cookie-parser')())
 .use(require('body-parser').urlencoded({ extended: true  }))
 .use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true  }))
@@ -81,7 +89,9 @@ app.get('/logout', function(req, res) {
   });
 });
 
-app.listen(port, () => {
-  console.log('App is listening on port ' + port);
-  // open('http://localhost:' + port);
-});
+module.exports = app;
+
+// app.listen(port, () => {
+//   console.log('App is listening on port ' + port);
+//   open('http://localhost:' + port);
+// });
