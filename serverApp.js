@@ -63,7 +63,7 @@ app.get('/showInfo', function(req, res) {
 });
 
 app.get('/getUser', function(req, res) {
-  console.log(req.user);
+  // console.log(req.user);
   if(req.user) {
     res.json(req.user._json);
   }

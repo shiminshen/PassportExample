@@ -40,7 +40,11 @@ class LoginComponent extends React.Component {
           <p>Hi {this.state.name}</p>
           <a href='/logout' className='icon-button facebook'>out</a>
         </div>) : (
-        <a href='/auth/facebook' className='icon-button facebook'>f</a>
+        <div className='button-group'>
+          <a href='/auth/facebook' className='icon-button facebook'><i className="fa fa-facebook"></i></a>
+          <a href='/auth/google' className='icon-button google'><i className="fa fa-google-plus"></i></a>
+          <a href='/auth/google' className='icon-button github'><i className="fa fa-github"></i></a>
+        </div>
         )}
       </div>
     );

@@ -1,7 +1,12 @@
 /* Wrapper */
+.index
+  display: flex
+  flex-direction: column
+  align-items: center;
+  justify-content: center
+
 .icon-button 
   text-decoration: none
-  color: #3B5998
   background-color: white
   border-radius: 3.6rem
   cursor: pointer
@@ -14,6 +19,27 @@
   user-select: none
   width: 50px
   transition: all 0.3s
+
+.facebook
+  color: #3B5998
   &:hover
     background-color: #3B5998
     color: white
+.google
+  color: #d73d32
+  &:hover
+    background-color: #d73d32
+    color: white
+.github
+  color: #000000
+  &:hover
+    background-color: #000000
+    color: white
+
+.login-component
+  width: 50%
+  display: flex
+  .button-group
+    width: 100%
+    display: flex
+    justify-content: space-around

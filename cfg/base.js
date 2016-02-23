@@ -70,8 +70,10 @@ module.exports = {
         loader: 'style-loader!css-loader!stylus-loader'
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2)$/,
-        loader: 'url-loader?limit=8192'
+        // test: /\.(png|jpg|gif|woff|woff2)$/,
+        // loader: 'url-loader?limit=8192'
+        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)(\?\S*)?$/,
+        loader: 'url?limit=100000&name=[name].[ext]' 
       }
     ]
   }
