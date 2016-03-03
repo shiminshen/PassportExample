@@ -18,13 +18,14 @@ passport.use(new FacebookStrategy({
   clientID: '1505414496431853',
   clientSecret: '10a20b4913227b7e958700673680695a',
   callbackURL: "http://localhost:3000/auth/facebook/callback",
-  profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
+  profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified', 'taggable_friends'],
 },
 function(accessToken, refreshToken, profile, cb) {
   // pass profile info to serialize user.
   var user = {};
 
   user.name = profile.name.familyName + profile.name.givenName
+  // console.log(profile);
   return cb(null, user);
 }));
 
