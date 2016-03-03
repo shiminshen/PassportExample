@@ -4,8 +4,8 @@ Use express and passport for authorization.
 
 Installation
 ---
-    $ npm install && npm run dist
+    $ npm install
 
 Start
 ---
-    $ node dist/server.js
+    $ npm start
