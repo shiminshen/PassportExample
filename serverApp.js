@@ -18,19 +18,18 @@ passport.use(new FacebookStrategy({
   clientID: '1505414496431853',
   clientSecret: '10a20b4913227b7e958700673680695a',
   callbackURL: "http://localhost:3000/auth/facebook/callback",
-  profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified', 'taggable_friends'],
+  profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'displayName', 'timezone', 'updated_time', 'verified', 'taggable_friends'],
 },
 function(accessToken, refreshToken, profile, cb) {
   // pass profile info to serialize user.
   var user = {};
 
-  user.name = profile.name.familyName + profile.name.givenName
-  // console.log(profile);
+  user.name = profile.displayName;
+  console.log(profile);
   return cb(null, user);
 }));
 
 // GoogleStratety
-
 passport.use(new GoogleStrategy({
   clientID: '233632838066-oouvqgoijgaau2ovr09rbt79v68qlqa8.apps.googleusercontent.com',
   clientSecret: 'hKRt4539PraYNOe5tJkF0PLd',
@@ -55,6 +54,7 @@ app.use(function(req, res, next) {
   }
 });
 
+// Use proxy to access webpack-dev-server for react-hot-replacement
 app.use('/assets', proxy(url.parse('http://localhost:8000/assets')));
 
 app.use(express.static(__dirname + '/src/'))
@@ -66,12 +66,12 @@ app.use(express.static(__dirname + '/src/'))
 
 
 passport.serializeUser(function(user, done) {
-  console.log('serialize user');
+  // console.log('serialize user');
   done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  console.log('deserialize user');
+  // console.log('deserialize user');
   done(null, obj);
 });
 
@@ -114,7 +114,3 @@ app.get('/logout', function(req, res) {
 
 module.exports = app;
 
-// app.listen(port, () => {
-//   console.log('App is listening on port ' + port);
-//   open('http://localhost:' + port);
-// });
